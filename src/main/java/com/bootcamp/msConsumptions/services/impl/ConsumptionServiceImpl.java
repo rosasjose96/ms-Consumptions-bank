@@ -30,19 +30,6 @@ public class ConsumptionServiceImpl implements IConsumptionService {
     }
 
     @Override
-    public Mono<Consumption> update(String s, Consumption o) {
-        return repository.findById(s).flatMap( c -> {
-            if (c == null){
-                return null;
-            }
-            c.setDescription(o.getDescription());
-            c.setAmount(o.getAmount());
-
-            return Mono.just(c);
-        });
-    }
-
-    @Override
     public Mono<Void> delete(Consumption o) {
         return repository.delete(o);
     }

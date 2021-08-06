@@ -30,19 +30,6 @@ public class ConsumptionCreditCardServiceImpl implements IConsumptionCreditCardS
     }
 
     @Override
-    public Mono<ConsumptionCreditCard> update(String s, ConsumptionCreditCard o) {
-        return repository.findById(s).flatMap( c -> {
-            if (c == null){
-                return null;
-            }
-            c.setConsumption(o.getConsumption());
-            c.setCreditCardDTO(o.getCreditCardDTO());
-
-            return Mono.just(c);
-        });
-    }
-
-    @Override
     public Mono<Void> delete(ConsumptionCreditCard o) {
         return repository.delete(o);
     }

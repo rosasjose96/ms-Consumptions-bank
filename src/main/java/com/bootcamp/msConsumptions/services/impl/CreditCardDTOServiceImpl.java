@@ -30,19 +30,6 @@ public class CreditCardDTOServiceImpl implements ICreditCardDTOService {
     }
 
     @Override
-    public Mono<CreditCardDTO> update(String s, CreditCardDTO o) {
-        return repository.findById(s).flatMap( c -> {
-            if (c == null){
-                return null;
-            }
-            c.setCreditLimit(o.getTotalConsumption());
-            c.setTotalConsumption(o.getTotalConsumption());
-
-            return Mono.just(c);
-        });
-    }
-
-    @Override
     public Mono<Void> delete(CreditCardDTO o) {
         return repository.delete(o);
     }

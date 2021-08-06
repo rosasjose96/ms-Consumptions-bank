@@ -22,6 +22,18 @@ public class RouterConfig {
 
         return route(RequestPredicates.GET("/api/consumption"), consumptionHandler::findAll)
                 .andRoute(RequestPredicates.GET("/api/consumption/{id}"), consumptionHandler::findConsumption)
-                .andRoute(RequestPredicates.POST("/product"), consumptionHandler::newConsumption);
+                .andRoute(RequestPredicates.POST("/api/consumption"), consumptionHandler::newConsumption)
+                .andRoute(RequestPredicates.PUT("/api/consumption/{id}"), consumptionHandler::updateConsumption)
+                .andRoute(RequestPredicates.DELETE("/api/consumption/{id}"), consumptionHandler::deleteConsumption)
+                .andRoute(RequestPredicates.GET("/api/consumptioncreditcarddto"), creditCardDTOHandler::findAll)
+                .andRoute(RequestPredicates.GET("/api/consumptioncreditcarddto/{id}"), creditCardDTOHandler::findCreditCardDTO)
+                .andRoute(RequestPredicates.POST("/api/consumptioncreditcarddto"), creditCardDTOHandler::newCreditCardDTO)
+                .andRoute(RequestPredicates.PUT("/api/consumptioncreditcarddto/{id}"), creditCardDTOHandler::updateCreditCardDTO)
+                .andRoute(RequestPredicates.DELETE("/api/consumptioncreditcarddto/{id}"), creditCardDTOHandler::deleteCreditCardDTO)
+                .andRoute(RequestPredicates.GET("/api/consumptioncreditcarddto"), conssumptionCreditCardHandler::findAll)
+                .andRoute(RequestPredicates.GET("/api/consumptioncreditcarddto/{id}"), conssumptionCreditCardHandler::findConsumptionCreditCard)
+                .andRoute(RequestPredicates.POST("/api/consumptioncreditcarddto"), conssumptionCreditCardHandler::newConsumptionCreditCard)
+                .andRoute(RequestPredicates.PUT("/api/consumptioncreditcarddto/{id}"), conssumptionCreditCardHandler::updateConsumptionCreditCard)
+                .andRoute(RequestPredicates.DELETE("/api/consumptioncreditcarddto/{id}"), conssumptionCreditCardHandler::deleteConsumptionCreditCard);
     }
 }
