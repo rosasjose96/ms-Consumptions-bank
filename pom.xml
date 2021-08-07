@@ -8,10 +8,10 @@
 		<version>2.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bootcamp.msCredit</groupId>
-	<artifactId>ms-Credit-bank</artifactId>
+	<groupId>com.bootcamp.msConsumptions</groupId>
+	<artifactId>ms-Consumptions-bank</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ms-Credit-bank</name>
+	<name>ms-Consumptions-bank</name>
 	<description>Credit Microservice </description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -37,6 +37,10 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
