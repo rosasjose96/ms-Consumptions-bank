@@ -1,7 +1,8 @@
 package com.bootcamp.msConsumptions.handler;
 
-import com.bootcamp.msConsumptions.entities.Consumption;
+import com.bootcamp.msConsumptions.models.entities.Consumption;
 import com.bootcamp.msConsumptions.services.IConsumptionService;
+import com.bootcamp.msConsumptions.services.ICreditCardDTOService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,9 @@ public class ConsumptionHandler {
     @Autowired
     private IConsumptionService service;
 
+    @Autowired
+    private ICreditCardDTOService creditService;
+
     public Mono<ServerResponse> findAll(ServerRequest request){
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(service.findAll(), Consumption.class);
@@ -43,15 +47,23 @@ public class ConsumptionHandler {
 
             Mono<Consumption> consumptionMono = request.bodyToMono(Consumption.class);
 
-            return consumptionMono.flatMap( c -> {
-                if(c.getDate() == null){
-                    c.setDate(new Date());
-                }
-                return service.create(c);
-            }).flatMap( c -> ServerResponse
-                    .ok()
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(BodyInserters.fromValue(c)));
+        return consumptionMono.flatMap( consumptionRequest -> creditService.findByPan(consumptionRequest.getIdentityNumber())
+                        .flatMap(credit -> {
+                            if(credit.getCreditLimit()<consumptionRequest.getAmount()) {
+                                return Mono.just(ServerResponse.badRequest());
+                            }else if (credit.getBalanceAmount()>0.0){
+                                consumptionRequest.setAmount(consumptionRequest.getAmount()-credit.getBalanceAmount());
+                            }
+                            credit.setTotalConsumption(credit.getTotalConsumption()+consumptionRequest.getAmount());
+
+                            return creditService.updateCredit(credit);
+                        }).flatMap(payment ->  {
+                            return service.create(consumptionRequest);
+                        }))
+                .flatMap( c -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromValue(c)));
           }
 
     public Mono<ServerResponse> deleteConsumption(ServerRequest request){

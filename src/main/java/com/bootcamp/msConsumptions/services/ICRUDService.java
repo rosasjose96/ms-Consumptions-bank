@@ -11,4 +11,6 @@ public interface ICRUDService<T,ID> {
     Mono<T> findById(ID id);
 
     Mono<Void> delete(T o);
+
+    Mono<T> update(T o);
 }
