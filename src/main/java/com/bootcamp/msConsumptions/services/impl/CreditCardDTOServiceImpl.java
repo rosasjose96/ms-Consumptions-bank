@@ -32,7 +32,7 @@ public class CreditCardDTOServiceImpl implements ICreditCardDTOService {
         LOGGER.info("initializing Credit Card Update");
 
         return client
-                .baseUrl("http://localhost:8081/api/creditcard")
+                .baseUrl("http://localhost:8091/api/creditcard")
                 .build()
                 .put()
                 .uri("/{id}", Collections.singletonMap("id",credit.getId()))
@@ -50,7 +50,7 @@ public class CreditCardDTOServiceImpl implements ICreditCardDTOService {
         LOGGER.info("initializing Credit query: " + pan);
         params.put("pan",pan);
         return client
-                .baseUrl("http://localhost:8081/api/creditcard")
+                .baseUrl("http://localhost:8091/api/creditcard")
                 .build()
                 .get()
                 .uri("/payment/{pan}",params)
