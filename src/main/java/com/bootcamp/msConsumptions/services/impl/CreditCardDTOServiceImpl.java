@@ -20,17 +20,21 @@ import java.util.Map;
 public class CreditCardDTOServiceImpl implements ICreditCardDTOService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CreditCardDTOServiceImpl.class);
-
+    private final WebClient.Builder client;
 
     @Autowired
-    private WebClient client;
-
+    public CreditCardDTOServiceImpl(WebClient.Builder client) {
+        this.client = client;
+    }
 
     @Override
     public Mono<CreditCardDTO> updateCredit(CreditCardDTO credit) {
         LOGGER.info("initializing Credit Card Update");
 
-        return client.put()
+        return client
+                .baseUrl("http://localhost:8081/api/creditcard")
+                .build()
+                .put()
                 .uri("/{id}", Collections.singletonMap("id",credit.getId()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -45,7 +49,10 @@ public class CreditCardDTOServiceImpl implements ICreditCardDTOService {
         Map<String, Object> params = new HashMap<String,Object>();
         LOGGER.info("initializing Credit query: " + pan);
         params.put("pan",pan);
-        return client.get()
+        return client
+                .baseUrl("http://localhost:8081/api/creditcard")
+                .build()
+                .get()
                 .uri("/payment/{pan}",params)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(CreditCardDTO.class))

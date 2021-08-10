@@ -1,8 +1,10 @@
 package com.bootcamp.msConsumptions.handler;
 
+import com.bootcamp.msConsumptions.models.dto.TransactionActiveDTO;
 import com.bootcamp.msConsumptions.models.entities.Consumption;
 import com.bootcamp.msConsumptions.services.IConsumptionService;
 import com.bootcamp.msConsumptions.services.ICreditCardDTOService;
+import com.bootcamp.msConsumptions.services.ITransactionDTOService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ public class ConsumptionHandler {
 
     @Autowired
     private IConsumptionService service;
+
+    @Autowired
+    private ITransactionDTOService transactionService;
 
     @Autowired
     private ICreditCardDTOService creditService;
@@ -55,9 +60,15 @@ public class ConsumptionHandler {
                                 consumptionRequest.setAmount(consumptionRequest.getAmount()-credit.getBalanceAmount());
                             }
                             credit.setTotalConsumption(credit.getTotalConsumption()+consumptionRequest.getAmount());
-
                             return creditService.updateCredit(credit);
-                        }).flatMap(payment ->  {
+                        }).flatMap(creditTransaction -> {
+                            TransactionActiveDTO transaction = new TransactionActiveDTO();
+                            transaction.setTypeoftransaction("CONSUMPTION");
+                            transaction.setTransactionAmount(consumptionRequest.getAmount());
+                            transaction.setIdentityNumber(consumptionRequest.getIdentityNumber());
+                            transaction.setTransactionDescription(consumptionRequest.getDescription());
+                            return transactionService.saveTransaction(transaction);
+                        }).flatMap(consumption ->  {
                             return service.create(consumptionRequest);
                         }))
                 .flatMap( c -> ServerResponse

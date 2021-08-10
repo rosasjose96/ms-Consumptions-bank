@@ -8,11 +8,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    @Value("${config.base.endpoint.creditcard}")
-    private String url;
-
     @Bean
-    public WebClient registerWebClient() {
-        return WebClient.create(url);
+    public WebClient.Builder registrarWebClient() {
+        return WebClient.builder();
     }
 }

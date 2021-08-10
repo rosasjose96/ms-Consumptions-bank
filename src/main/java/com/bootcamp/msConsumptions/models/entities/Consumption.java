@@ -25,8 +25,6 @@ public class Consumption {
 
     private String description;
 
-    private final String TYPEOFTRANSACTION = "CONSUMPTION";
-
     private String identityNumber;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
