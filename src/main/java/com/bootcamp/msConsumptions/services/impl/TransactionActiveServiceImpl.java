@@ -6,6 +6,7 @@ import com.bootcamp.msConsumptions.services.ITransactionDTOService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,7 +21,7 @@ public class TransactionActiveServiceImpl implements ITransactionDTOService {
     private final WebClient.Builder client;
 
     @Autowired
-    public TransactionActiveServiceImpl(WebClient.Builder client) {
+    public TransactionActiveServiceImpl( WebClient.Builder client) {
         this.client = client;
     }
 
