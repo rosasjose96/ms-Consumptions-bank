@@ -2,6 +2,7 @@ package com.bootcamp.msConsumptions.models.entities;
 
 import com.bootcamp.msConsumptions.models.dto.CreditCardDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @Builder
 public class Consumption {
