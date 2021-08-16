@@ -11,6 +11,7 @@ public class WebClientConfig {
 
     @Bean
     @Qualifier("client")
+    @LoadBalanced
     public WebClient.Builder registrarWebClient() {
         return WebClient.builder();
     }
