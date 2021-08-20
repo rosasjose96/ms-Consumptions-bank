@@ -4,7 +4,9 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "creditCardDTO")
+/**
+ * The type Credit card dto.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

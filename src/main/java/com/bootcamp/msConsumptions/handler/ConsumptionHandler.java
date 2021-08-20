@@ -18,6 +18,9 @@ import reactor.core.publisher.Mono;
 
 import java.util.Date;
 
+/**
+ * The type Consumption handler.
+ */
 @Slf4j(topic = "consumption_handler")
 @Component
 public class ConsumptionHandler {
@@ -33,11 +36,23 @@ public class ConsumptionHandler {
     @Autowired
     private ICreditCardDTOService creditService;
 
+    /**
+     * Find all mono.
+     *
+     * @param request the request
+     * @return the mono
+     */
     public Mono<ServerResponse> findAll(ServerRequest request){
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(service.findAll(), Consumption.class);
     }
 
+    /**
+     * Find consumption mono.
+     *
+     * @param request the request
+     * @return the mono
+     */
     public Mono<ServerResponse> findConsumption(ServerRequest request) {
         String id = request.pathVariable("id");
         return service.findById(id).flatMap((c -> ServerResponse
@@ -48,6 +63,12 @@ public class ConsumptionHandler {
         );
     }
 
+    /**
+     * New consumption mono.
+     *
+     * @param request the request
+     * @return the mono
+     */
     public Mono<ServerResponse> newConsumption(ServerRequest request){
 
             Mono<Consumption> consumptionMono = request.bodyToMono(Consumption.class);
@@ -77,6 +98,12 @@ public class ConsumptionHandler {
                         .body(BodyInserters.fromValue(c)));
           }
 
+    /**
+     * Delete consumption mono.
+     *
+     * @param request the request
+     * @return the mono
+     */
     public Mono<ServerResponse> deleteConsumption(ServerRequest request){
 
         String id = request.pathVariable("id");
@@ -89,6 +116,12 @@ public class ConsumptionHandler {
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 
+    /**
+     * Update consumption mono.
+     *
+     * @param request the request
+     * @return the mono
+     */
     public Mono<ServerResponse> updateConsumption(ServerRequest request){
         Mono<Consumption> consumptionMono = request.bodyToMono(Consumption.class);
         String id = request.pathVariable("id");

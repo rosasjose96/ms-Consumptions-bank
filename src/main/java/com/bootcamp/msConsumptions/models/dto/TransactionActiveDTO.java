@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Transaction active dto.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

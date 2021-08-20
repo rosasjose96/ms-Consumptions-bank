@@ -14,12 +14,20 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 
+/**
+ * The type Transaction active service.
+ */
 @Service
 public class TransactionActiveServiceImpl implements ITransactionDTOService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionActiveServiceImpl.class);
     private final WebClient.Builder client;
 
+    /**
+     * Instantiates a new Transaction active service.
+     *
+     * @param client the client
+     */
     @Autowired
     public TransactionActiveServiceImpl( WebClient.Builder client) {
         this.client = client;
